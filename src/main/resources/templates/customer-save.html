@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add</title>
+</head>
+<body>
+    <a th:href="@{/customer-list}">List Customer</a>
+
+    <h1>Add new Customer</h1>
+    <form th:action="@{/saveCustomer}" method="post" th:object="${customer}">
+        Name: <input th:field="*{name}"/> <br/> <br/>
+        Address: <input th:field="*{address}"/> <br/> <br/>
+        <input type="submit" value="Submit"/>
+    </form>
+</body>
+</html>

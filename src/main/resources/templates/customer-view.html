@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>View</title>
+</head>
+<body>
+    <a th:href="@{/customer-list}">List Customer</a>
+    <br/> <br/>
+
+    <table>
+        <tr>
+            <td>ID: </td>
+            <td><p th:text="${customer.id}"></td>
+        </tr>
+        <tr>
+            <td>Name: </td>
+            <td><p th:text="${customer.name}"></p></td>
+        </tr>
+        <tr>
+            <td>Address: </td>
+            <td><p th:text="${customer.address}"></p></td>
+        </tr>
+    </table>
+</body>
+</html>
