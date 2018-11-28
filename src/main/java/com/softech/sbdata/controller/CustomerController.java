@@ -3,11 +3,15 @@ package com.softech.sbdata.controller;
 import com.softech.sbdata.entities.Customer;
 import com.softech.sbdata.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -18,8 +22,20 @@ public class CustomerController {
     private CustomerRepository customerRepository;
 
     @RequestMapping(value = {"/", "/customer-list"})
-    public String listCustomer(Model model){
-        model.addAttribute("listCustomer", customerRepository.findAll());
+    public String listCustomer(Model model,
+            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
+            @RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort){
+        Sort sortable = null;
+        if (sort.equals("ASC")){
+            sortable = Sort.by("id").ascending();
+        }
+
+        if (sort.equals("DESC")){
+            sortable = Sort.by("id").descending();
+        }
+        Pageable pageable = PageRequest.of(page, size, sortable);
+        model.addAttribute("listCustomer", customerRepository.findCustomers(pageable));
         return "customer-list";
     }
 
